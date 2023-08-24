@@ -8,17 +8,35 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var displayResultLabel: UILabel!
+    var stillTyping = false
     
     @IBAction func numberPressed(_ sender: UIButton) {
         
         let number = sender.currentTitle!
-        displayResultLabel.text = displayResultLabel.text! + number
+        let textDisp = displayResultLabel.text!
+        
+        if stillTyping {
+            if textDisp.count < 20 {
+                displayResultLabel.text = displayResultLabel.text! + number
+            }
+        } else {
+            displayResultLabel.text = number
+            stillTyping = true
+        }
     }
     
     
-
-
-}
+    @IBAction func twoOperandsSignPressed(_ sender: UIButton) {
+    }
+    
+    
+    
+        
+    
+ 
+  }
+    
+    
 
