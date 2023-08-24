@@ -9,10 +9,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var displayResultLabel: UILabel!
+    
+    @IBAction func numberPressed(_ sender: UIButton) {
+        
+        let number = sender.currentTitle!
+        displayResultLabel.text = displayResultLabel.text! + number
     }
+    
+    
 
 
 }
