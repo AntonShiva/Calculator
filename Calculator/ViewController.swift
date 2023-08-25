@@ -26,7 +26,15 @@ class ViewController: UIViewController {
             return Double(displayResultLabel.text!)!
         }
         set {
-            displayResultLabel.text = "\(newValue)"
+            // для того что бы убрать .0 (ноль) после точки в результате
+            // создаем переменную с новым значение и массив
+            let value = "\(newValue)"
+            let valueArray = value.components(separatedBy: ".")
+            if valueArray[1] == "0" {
+                displayResultLabel.text = "\(valueArray[0])"
+            } else {
+                displayResultLabel.text = "\(newValue)"
+            }
             // что бы можно было вводить новое число
             stillTyping = false
         }
