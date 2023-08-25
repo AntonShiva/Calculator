@@ -31,9 +31,14 @@ class ViewController: UIViewController {
             stillTyping = false
         }
     }
-    // переменная определяющая в теле nemberPressed порядок ветвления if
+    //_____________________Переменные-индикаторы_______________________________________
+    // переменная индикатор для дробного числа (определяет указывали мы
+    //что это число дробное
+    var dotIsPlaced = false
+    // переменная индикатор определяющая в теле nemberPressed порядок ветвления if
     // когда она false, то в if ноль заменяеться на введенное значение
     var stillTyping = false
+    //_________________________________________________________________________________
     // кнопки цифр
     @IBAction func numberPressed(_ sender: UIButton) {
     // номер нажатой цифры
@@ -49,22 +54,26 @@ class ViewController: UIViewController {
             stillTyping = true
         }
     }
+    // + - × ÷
     @IBAction func twoOperandsSignPressed(_ sender: UIButton) {
         operationSing = sender.currentTitle!
         firstOperand = currentInput
         stillTyping = false
+        dotIsPlaced = false
+        
     }
     // универсальная функция принимающая клоужеры из equalitySingPresset из кейсов в свиче
     func operateWithTwoOperands(operation: (Double, Double) -> Double) {
         currentInput = operation(firstOperand, secondOperand)
         stillTyping = false
     }
-    // кнопка = (равно)
+    // кнопка = (знак равенства)
     @IBAction func equalitySignPresset(_ sender: UIButton) {
         // передаем во второй опернад значение
         if stillTyping {
             secondOperand = currentInput
         }
+        dotIsPlaced = false
         
         switch operationSing {
            case "+":
@@ -77,12 +86,46 @@ class ViewController: UIViewController {
             operateWithTwoOperands{$0 / $1}
         default: break
         }
-        
+    }
+    // кнопка - "С" (обнуление)
+    @IBAction func clearButtonPressed(_ sender: UIButton) {
+        firstOperand = 0
+        secondOperand = 0
+        currentInput = 0
+        displayResultLabel.text = "0"
+        operationSing = ""
+        stillTyping = false
+        dotIsPlaced = false
     }
     
-        
+    // +/- меняет то что находиться на дисплее на противоположный знак
+    @IBAction func plusMinusButtonPressed(_ sender: UIButton) {
+      currentInput = -currentInput
+    }
+    // %
+    @IBAction func percentageButtonPressed(_ sender: UIButton) {
+        if firstOperand == 0 {
+            currentInput = currentInput / 100
+        } else {
+            secondOperand = firstOperand * currentInput / 100
+        }
+        stillTyping = false
+    }
+    // √ квадратный корень
+    @IBAction func squareRootButtonPressed(_ sender: UIButton) {
+       currentInput = sqrt(currentInput)
+    }
+    // . выделение дробной части числа
+    @IBAction func dotButtonPressed(_ sender: UIButton) {
+        if stillTyping && !dotIsPlaced {
+            displayResultLabel.text = displayResultLabel.text! + "."
+            dotIsPlaced = true
+        } else if !stillTyping && !dotIsPlaced {
+            displayResultLabel.text = "0"
+        }
+    }
     
- 
+    
   }
     
     
